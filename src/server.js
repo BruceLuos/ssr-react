@@ -1,19 +1,23 @@
 import React from "react";
 import { StaticRouter } from "react-router-dom/server";
 import ReactDOMServer from "react-dom/server";
+import { Provider } from "react-redux";
 import Routes from "./routes";
+import store from "./store";
 
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static('dist/public'));
+app.use(express.static("dist/public"));
 
 app.get("*", (req, res) => {
   const content = ReactDOMServer.renderToString(
-    <StaticRouter>
-      <Routes />
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter>
+        <Routes />
+      </StaticRouter>
+    </Provider>
   );
 
   console.log("content", content);

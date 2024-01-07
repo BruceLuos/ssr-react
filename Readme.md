@@ -64,3 +64,41 @@ ReactDom.hydrate 前端接管服务端渲染的页面
 服务端html中引入client.js打包后的bundle_client.js,成功注入事件
 
 ```
+
+服务端加入状态管理
+```
+yarn add redux react-redux redux-thunk
+mkdir store
+mkdir actions
+mkdir reducers
+```
+home page use store
+
+```
+import { useDispatch, useSelector } from "react-redux";
+
+const Home = ()=> {
+const dispatch = useDispatch()
+const homeData = useSelector(state=> state.home)
+}
+```
+client.js Provider store
+```
+import { Provider } from "react-redux";
+import createStoreInstance from './store';
+import Routes from './routes';
+import store from './store'
+ReactDOM.hydrateRoot(
+  document.querySelector("#root"),
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes />
+    </BrowserRouter>
+  </Provider>
+);
+
+```
+server.js Provider store
+```
+
+```
