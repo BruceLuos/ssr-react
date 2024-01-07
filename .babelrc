@@ -1,0 +1,25 @@
+{
+  "presets": [
+    "@babel/preset-react",
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "corejs": 3
+      }
+    ]
+  ]
+}
+/**
+  @babel/preset-env 会根据浏览器目标环境导入所需的 polyfill。useBuiltIns 选项可以控制 polyfill 的导入方式。
+
+  useBuiltIns 有以下几种配置值:
+
+  false: 默认值,不导入 polyfill,需要用户自己导入所需的 polyfill。
+
+  entry: 将所需的 polyfill 导入到全局对象中,一般导入到入口文件中。
+
+  usage: 根据代码中使用到的新语法,仅导入所需的 polyfill,可以自动按需导入。
+
+  false: 不导入任何 polyfill。
+*/
