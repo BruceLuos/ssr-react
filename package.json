@@ -1,0 +1,14 @@
+{
+  "name": "ssr-react",
+  "version": "1.0.0",
+  "description": "ssr-react",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "author": "BruceLuo",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
