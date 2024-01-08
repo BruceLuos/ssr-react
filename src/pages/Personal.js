@@ -1,7 +1,7 @@
 import React from "react";
-
+import styles from "./personal.css";
 const Personal = () => {
-  return <div>Personal page</div>;
+  return <div className={styles.personal}>Personal page</div>;
 };
 
 export default Personal;

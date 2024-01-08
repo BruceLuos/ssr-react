@@ -1,7 +1,23 @@
 
 
 
+# React ssr 搭建
 
+## 运行
+```
+yarn install 
+yarn dev
+```
+
+## 打包
+```
+yarn build
+```
+
+## 部署后运行
+```
+node dist/bundle_server.js
+```
 ## Step
 
 ```
@@ -153,6 +169,24 @@ export default function createStoreInstance(preloadedState = {}) {
 客户端的store直接获取window.__PRELOAD_STATE__
 ```
 const store = createStoreInstance(window?.__PRELOAD_STATE__);
+```
+
+处理css样式
+使用css-loader 开启modules按模块区分并将css内嵌在html上
+```
+  {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+            },
+          },
+        ],
+      },
+
 ```
 
 
