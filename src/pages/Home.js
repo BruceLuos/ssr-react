@@ -28,4 +28,9 @@ const Home = () => {
   );
 };
 
+// 通过getInitialData组件异步数据支持服务端渲染
+Home.getInitialData = async (store) => {
+  return store.dispatch(fetchHomeData);
+};
+
 export default Home;

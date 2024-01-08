@@ -100,5 +100,59 @@ ReactDOM.hydrateRoot(
 ```
 server.js Provider store
 ```
+ const store = createStoreInstance();
+  const content = ReactDOMServer.renderToString(
+    <Provider store={store}>
+      <StaticRouter>
+        <Routes />
+      </StaticRouter>
+    </Provider>
+  );
+```
+
+页面组件支持服务端渲染获取异步数据
+Home.js
+```
+Home.getInitialData = async (store) => {
+  return store.dispatch(fetchHomeData);
+};
+```
+server.js
+根据组件抛出的getInitialData方法决定数据渲染是否在服务端处理
+```
+  const promises = routesConfig?.map((route) => {
+    const component = route?.component;
+
+    if (route?.path === req?.url && component?.getInitialData) {
+      return component?.getInitialData(store);
+    } else {
+      return null;
+    }
+  });
+```
+
+发现问题-数据已经是在服务端中获取了，但页面展示还是会先空白再显示数据。
+这是因为虽然你服务端已经拿到数据了，但是客户端却不知道，仍然按照客户端的渲染方式，再一次获取数据再渲染
+这就是csr和ssr没有结合起来，重复做了同一件事
+
+处理方法
+store 加入preloadedState用来注入客户端
+```
+export default function createStoreInstance(preloadedState = {}) {
+  console.log(thunk)
+  return createStore(reducer, preloadedState, applyMiddleware(thunk));
+}
 
 ```
+服务端注入window.__PRELOAD_STATE__数据
+```
+  <script>
+          window.__PRELOAD_STATE__=${JSON.stringify(preloadedState)}
+          </script>
+```
+客户端的store直接获取window.__PRELOAD_STATE__
+```
+const store = createStoreInstance(window?.__PRELOAD_STATE__);
+```
+
+
