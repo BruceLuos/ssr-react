@@ -19,6 +19,7 @@ export const fetchHomeData = async (dispath) => {
       });
     }, 2000);
   });
+  console.log('获取最新homedata')
 
   dispath({
     type: FETCH_HOME_DATA,
